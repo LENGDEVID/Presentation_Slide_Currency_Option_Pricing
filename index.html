@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Group Members: Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang Professor: Dr.&nbsp;LUEY Sokea">
-  <meta name="dcterms.date" content="2026-01-29">
+  <meta name="dcterms.date" content="2026-01-30">
   <title>Garman-Kohlhagen European Currency Option Pricing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -208,7 +208,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 </div>
 </div>
 
-  <p class="date">2026-01-29</p>
+  <p class="date">2026-01-30</p>
 </section><section id="TOC">
 <nav role="doc-toc"> 
 <h2 id="toc-title">Table of contents</h2>
@@ -272,7 +272,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li class="fragment"><strong>Corporate Finance</strong>: Manage international cash flows</li>
 </ul>
 <h3 id="historical-development">Historical Development</h3>
-<div id="f10f5ce1" class="cell" data-execution_count="1">
+<div id="6e89e8ce" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -362,7 +362,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li><strong><span class="math inline">\(W_t\)</span></strong>: Standard Brownian motion</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="5c4a4cf8" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
+<div id="294d975f" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -443,7 +443,7 @@ d_2 = d_1 - \sigma\sqrt{\tau}
 </section>
 <section id="implementation-validation" class="slide level2 scrollable">
 <h2>Implementation &amp; Validation</h2>
-<div id="a00ff3d8" class="cell" data-execution_count="3">
+<div id="0ddbb599" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -479,7 +479,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="option-price-behavior" class="slide level2 scrollable">
 <h2>Option Price Behavior</h2>
-<div id="3155579c" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
+<div id="8127bd86" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -573,7 +573,7 @@ Put-Call Parity Check: True</code></pre>
 </tbody>
 </table>
 </div>
-<div id="dfc3e6d9" class="cell" data-execution_count="5">
+<div id="864fa88d" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">def</span> greeks_call(S, K, rd, rf, sigma, tau):</span>
@@ -594,7 +594,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="greeks-visualization" class="slide level2 scrollable">
 <h2>Greeks Visualization</h2>
-<div id="a375d190" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
+<div id="02b2a82c" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -626,7 +626,7 @@ Put-Call Parity Check: True</code></pre>
 <section id="delta-hedging-application" class="slide level2 scrollable">
 <h2>Delta Hedging Application</h2>
 <h3 id="practical-risk-management">Practical Risk Management</h3>
-<div id="50017ebb" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
+<div id="61e8fc32" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -692,7 +692,7 @@ Put-Call Parity Check: True</code></pre>
 <li><span class="math inline">\(V_M^n = S_M - K e^{-r_d(T-t_n)}\)</span> (S → ∞)</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="f7ca2c29" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
+<div id="3e686d7d" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -781,7 +781,7 @@ V_i^{n+1} = V_i^n + \Delta t \left[ (r_d - r_f)S_i \frac{V_{i+1}^{n+1} - V_{i-1}
 </section>
 <section id="implementation-example" class="slide level2 scrollable">
 <h2>Implementation Example</h2>
-<div id="48a4c680" class="cell" data-execution_count="9">
+<div id="43a38ed0" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">def</span> crank_nicolson(S_min, S_max, M, T, N, K, rd, rf, sigma, option_type<span class="op">=</span><span class="st">'call'</span>):</span>
@@ -812,38 +812,39 @@ V_i^{n+1} = V_i^n + \Delta t \left[ (r_d - r_f)S_i \frac{V_{i+1}^{n+1} - V_{i-1}
 <span id="cb4-26"><a href=""></a>        b[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb4-27"><a href=""></a>        b[M] <span class="op">=</span> S_max <span class="op">-</span> K<span class="op">*</span>np.exp(<span class="op">-</span>rd<span class="op">*</span>tau) <span class="cf">if</span> option_type <span class="op">==</span> <span class="st">'call'</span> <span class="cf">else</span> <span class="dv">0</span></span>
 <span id="cb4-28"><a href=""></a>        </span>
-<span id="cb4-29"><a href=""></a>        <span class="co"># Thomas algorithm (tridiagonal solver)</span></span>
-<span id="cb4-30"><a href=""></a>        V <span class="op">=</span> thomas_algorithm(alpha, beta<span class="op">+</span><span class="dv">1</span>, gamma, b)</span>
-<span id="cb4-31"><a href=""></a>    </span>
-<span id="cb4-32"><a href=""></a>    <span class="cf">return</span> S, V</span>
-<span id="cb4-33"><a href=""></a></span>
-<span id="cb4-34"><a href=""></a><span class="kw">def</span> thomas_algorithm(a, b, c, d):</span>
-<span id="cb4-35"><a href=""></a>    <span class="co">"""Solve tridiagonal system Ax=d"""</span></span>
-<span id="cb4-36"><a href=""></a>    n <span class="op">=</span> <span class="bu">len</span>(d)</span>
-<span id="cb4-37"><a href=""></a>    c_prime <span class="op">=</span> np.zeros(n<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb4-38"><a href=""></a>    d_prime <span class="op">=</span> np.zeros(n)</span>
-<span id="cb4-39"><a href=""></a>    x <span class="op">=</span> np.zeros(n)</span>
-<span id="cb4-40"><a href=""></a>    </span>
-<span id="cb4-41"><a href=""></a>    c_prime[<span class="dv">0</span>] <span class="op">=</span> c[<span class="dv">0</span>] <span class="op">/</span> b[<span class="dv">0</span>]</span>
-<span id="cb4-42"><a href=""></a>    d_prime[<span class="dv">0</span>] <span class="op">=</span> d[<span class="dv">0</span>] <span class="op">/</span> b[<span class="dv">0</span>]</span>
-<span id="cb4-43"><a href=""></a>    </span>
-<span id="cb4-44"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb4-45"><a href=""></a>        c_prime[i] <span class="op">=</span> c[i] <span class="op">/</span> (b[i] <span class="op">-</span> a[i]<span class="op">*</span>c_prime[i<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb4-46"><a href=""></a>    </span>
-<span id="cb4-47"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n):</span>
-<span id="cb4-48"><a href=""></a>        d_prime[i] <span class="op">=</span> (d[i] <span class="op">-</span> a[i]<span class="op">*</span>d_prime[i<span class="op">-</span><span class="dv">1</span>]) <span class="op">/</span> (b[i] <span class="op">-</span> a[i]<span class="op">*</span>c_prime[i<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb4-49"><a href=""></a>    </span>
-<span id="cb4-50"><a href=""></a>    x[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> d_prime[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb4-51"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb4-52"><a href=""></a>        x[i] <span class="op">=</span> d_prime[i] <span class="op">-</span> c_prime[i]<span class="op">*</span>x[i<span class="op">+</span><span class="dv">1</span>]</span>
-<span id="cb4-53"><a href=""></a>    </span>
-<span id="cb4-54"><a href=""></a>    <span class="cf">return</span> x</span>
-<span id="cb4-55"><a href=""></a></span>
-<span id="cb4-56"><a href=""></a><span class="co"># Demonstrate</span></span>
-<span id="cb4-57"><a href=""></a>S_num, V_num <span class="op">=</span> crank_nicolson(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">100</span>, <span class="fl">1.0</span>, <span class="dv">200</span>, K, rd, rf, sigma)</span>
-<span id="cb4-58"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Numerical Call Price at S=100: $</span><span class="sc">{</span>np<span class="sc">.</span>interp(<span class="dv">100</span>, S_num, V_num)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb4-59"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Analytical Call Price at S=100: $</span><span class="sc">{</span>gk_call(<span class="dv">100</span>, K, rd, rf, sigma, <span class="fl">1.0</span>)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb4-60"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Relative Error: </span><span class="sc">{</span><span class="bu">abs</span>(np.interp(<span class="dv">100</span>, S_num, V_num) <span class="op">-</span> gk_call(<span class="dv">100</span>, K, rd, rf, sigma, <span class="fl">1.0</span>))<span class="op">/</span>gk_call(<span class="dv">100</span>, K, rd, rf, sigma, <span class="fl">1.0</span>)<span class="op">*</span><span class="dv">100</span><span class="sc">:.4f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-29"><a href=""></a>        </span>
+<span id="cb4-30"><a href=""></a>        <span class="co"># Thomas algorithm (tridiagonal solver)</span></span>
+<span id="cb4-31"><a href=""></a>        V <span class="op">=</span> thomas_algorithm(alpha, beta<span class="op">+</span><span class="dv">1</span>, gamma, b)</span>
+<span id="cb4-32"><a href=""></a>    </span>
+<span id="cb4-33"><a href=""></a>    <span class="cf">return</span> S, V</span>
+<span id="cb4-34"><a href=""></a></span>
+<span id="cb4-35"><a href=""></a><span class="kw">def</span> thomas_algorithm(a, b, c, d):</span>
+<span id="cb4-36"><a href=""></a>    <span class="co">"""Solve tridiagonal system Ax=d"""</span></span>
+<span id="cb4-37"><a href=""></a>    n <span class="op">=</span> <span class="bu">len</span>(d)</span>
+<span id="cb4-38"><a href=""></a>    c_prime <span class="op">=</span> np.zeros(n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb4-39"><a href=""></a>    d_prime <span class="op">=</span> np.zeros(n)</span>
+<span id="cb4-40"><a href=""></a>    x <span class="op">=</span> np.zeros(n)</span>
+<span id="cb4-41"><a href=""></a>    </span>
+<span id="cb4-42"><a href=""></a>    c_prime[<span class="dv">0</span>] <span class="op">=</span> c[<span class="dv">0</span>] <span class="op">/</span> b[<span class="dv">0</span>]</span>
+<span id="cb4-43"><a href=""></a>    d_prime[<span class="dv">0</span>] <span class="op">=</span> d[<span class="dv">0</span>] <span class="op">/</span> b[<span class="dv">0</span>]</span>
+<span id="cb4-44"><a href=""></a>    </span>
+<span id="cb4-45"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb4-46"><a href=""></a>        c_prime[i] <span class="op">=</span> c[i] <span class="op">/</span> (b[i] <span class="op">-</span> a[i]<span class="op">*</span>c_prime[i<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-47"><a href=""></a>    </span>
+<span id="cb4-48"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n):</span>
+<span id="cb4-49"><a href=""></a>        d_prime[i] <span class="op">=</span> (d[i] <span class="op">-</span> a[i]<span class="op">*</span>d_prime[i<span class="op">-</span><span class="dv">1</span>]) <span class="op">/</span> (b[i] <span class="op">-</span> a[i]<span class="op">*</span>c_prime[i<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-50"><a href=""></a>    </span>
+<span id="cb4-51"><a href=""></a>    x[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> d_prime[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb4-52"><a href=""></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb4-53"><a href=""></a>        x[i] <span class="op">=</span> d_prime[i] <span class="op">-</span> c_prime[i]<span class="op">*</span>x[i<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb4-54"><a href=""></a>    </span>
+<span id="cb4-55"><a href=""></a>    <span class="cf">return</span> x</span>
+<span id="cb4-56"><a href=""></a></span>
+<span id="cb4-57"><a href=""></a><span class="co"># Demonstrate</span></span>
+<span id="cb4-58"><a href=""></a>S_num, V_num <span class="op">=</span> crank_nicolson(<span class="dv">50</span>, <span class="dv">150</span>, <span class="dv">100</span>, <span class="fl">1.0</span>, <span class="dv">200</span>, K, rd, rf, sigma)</span>
+<span id="cb4-59"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Numerical Call Price at S=100: $</span><span class="sc">{</span>np<span class="sc">.</span>interp(<span class="dv">100</span>, S_num, V_num)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb4-60"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Analytical Call Price at S=100: $</span><span class="sc">{</span>gk_call(<span class="dv">100</span>, K, rd, rf, sigma, <span class="fl">1.0</span>)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb4-61"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Relative Error: </span><span class="sc">{</span><span class="bu">abs</span>(np.interp(<span class="dv">100</span>, S_num, V_num) <span class="op">-</span> gk_call(<span class="dv">100</span>, K, rd, rf, sigma, <span class="fl">1.0</span>))<span class="op">/</span>gk_call(<span class="dv">100</span>, K, rd, rf, sigma, <span class="fl">1.0</span>)<span class="op">*</span><span class="dv">100</span><span class="sc">:.4f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Numerical Call Price at S=100: $0.0000
@@ -909,7 +910,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="stability-demonstration" class="slide level2 scrollable">
 <h2>Stability Demonstration</h2>
-<div id="d2ae0966" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
+<div id="4184b7f3" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -941,10 +942,9 @@ Relative Error: 100.0000%</code></pre>
 </div>
 <div class="callout-content">
 <ul>
-<li><strong>Left plot</strong>: All three methods (Analytical, FTCS, CN) overlap perfectly when stable → numerical methods work when conditions are right</li>
+<li><strong>Left plot</strong>: All 2 methods (Analytical, FTCS, CN) overlap perfectly when stable → numerical methods work when conditions are right</li>
 <li><strong>Right plot (CFL diagram)</strong>: Green zone = safe for FTCS, red zone = unstable and will explode</li>
 <li><strong>Critical lesson</strong>: FTCS needs tiny time steps (Δt &lt; 10⁻⁴) → requires 1000+ steps, very expensive!</li>
-<li><strong>BTCS/CN advantage</strong>: No stability restriction → can use 5-10× larger time steps → much faster computation</li>
 <li><strong>Why this matters</strong>: In production, you want methods that “just work” without worrying about stability crashes</li>
 </ul>
 </div>
@@ -1003,7 +1003,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="convergence-study-results" class="slide level2 scrollable">
 <h2>Convergence Study Results</h2>
-<div id="974541d8" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="11">
+<div id="764d6d85" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1047,7 +1047,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="accuracy-vs-computational-cost" class="slide level2 scrollable">
 <h2>Accuracy vs Computational Cost</h2>
-<div id="8df5d8ac" class="cell" data-fig-height="6" data-fig-width="12" data-execution_count="12">
+<div id="436c1249" class="cell" data-fig-height="6" data-fig-width="12" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1088,7 +1088,7 @@ Method   N     Error  Cost
 </section>
 <section id="d-option-price-surface" class="slide level2 scrollable">
 <h2>3D Option Price Surface</h2>
-<div id="ed4eae7f" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="13">
+<div id="ccc745fe" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1132,7 +1132,7 @@ Method   N     Error  Cost
 </section>
 <section id="time-evolution-of-option-prices" class="slide level2 scrollable">
 <h2>Time Evolution of Option Prices</h2>
-<div id="2f21d577" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="14">
+<div id="2c9c976f" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1176,7 +1176,7 @@ Method   N     Error  Cost
 </section>
 <section id="numerical-vs-analytical-comparison" class="slide level2 scrollable">
 <h2>Numerical vs Analytical Comparison</h2>
-<div id="b5b4821c" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="15">
+<div id="26b4b3c4" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1234,7 +1234,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="method-comparison-summary" class="slide level2 scrollable">
 <h2>Method Comparison Summary</h2>
-<div id="3bb06b91" class="cell" data-execution_count="16">
+<div id="c798a9cb" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1315,7 +1315,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="computational-performance" class="slide level2 scrollable">
 <h2>Computational Performance</h2>
-<div id="8109ef49" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="17">
+<div id="feb2bcbd" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1369,7 +1369,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="key-findings" class="slide level2 scrollable">
 <h2>Key Findings</h2>
-<div id="94d86b4c" class="cell" data-execution_count="18">
+<div id="3eb9ddec" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <figure>

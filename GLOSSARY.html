@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>glossary</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="GLOSSARY_files/libs/clipboard/clipboard.min.js"></script>
+<script src="GLOSSARY_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="GLOSSARY_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="GLOSSARY_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="GLOSSARY_files/libs/quarto-html/popper.min.js"></script>
+<script src="GLOSSARY_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="GLOSSARY_files/libs/quarto-html/anchor.min.js"></script>
+<link href="GLOSSARY_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="GLOSSARY_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="GLOSSARY_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="GLOSSARY_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="GLOSSARY_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="glossary---garman-kohlhagen-currency-option-pricing" class="level1">
+<h1>Glossary - Garman-Kohlhagen Currency Option Pricing</h1>
+<section id="abbreviations-and-acronyms" class="level2">
+<h2 class="anchored" data-anchor-id="abbreviations-and-acronyms">Abbreviations and Acronyms</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 32%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Abbreviation</th>
+<th style="text-align: left;">Full Form</th>
+<th style="text-align: left;">Context</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>FX</strong></td>
+<td style="text-align: left;">Foreign Exchange</td>
+<td style="text-align: left;">Currency trading markets</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>PDE</strong></td>
+<td style="text-align: left;">Partial Differential Equation</td>
+<td style="text-align: left;">Mathematical equation with multiple variables</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>SDE</strong></td>
+<td style="text-align: left;">Stochastic Differential Equation</td>
+<td style="text-align: left;">Equation describing random processes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>ATM</strong></td>
+<td style="text-align: left;">At-The-Money</td>
+<td style="text-align: left;">Option where spot price equals strike price (S ≈ K)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>ITM</strong></td>
+<td style="text-align: left;">In-The-Money</td>
+<td style="text-align: left;">Call: S &gt; K, Put: S &lt; K (option has intrinsic value)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>OTM</strong></td>
+<td style="text-align: left;">Out-of-The-Money</td>
+<td style="text-align: left;">Call: S &lt; K, Put: S &gt; K (option has no intrinsic value)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>FTCS</strong></td>
+<td style="text-align: left;">Forward-Time Central-Space</td>
+<td style="text-align: left;">Explicit finite difference method</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>BTCS</strong></td>
+<td style="text-align: left;">Backward-Time Central-Space</td>
+<td style="text-align: left;">Implicit finite difference method</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>CN</strong></td>
+<td style="text-align: left;">Crank-Nicolson</td>
+<td style="text-align: left;">Implicit finite difference method (average of FTCS and BTCS)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CFL</strong></td>
+<td style="text-align: left;">Courant-Friedrichs-Lewy</td>
+<td style="text-align: left;">Stability condition for numerical methods</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>P&amp;L</strong></td>
+<td style="text-align: left;">Profit and Loss</td>
+<td style="text-align: left;">Financial gain or loss from trading</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>GMV</strong></td>
+<td style="text-align: left;">Global Minimum Variance</td>
+<td style="text-align: left;">Portfolio with lowest possible risk</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>EOA</strong></td>
+<td style="text-align: left;">Empirical Order of Accuracy</td>
+<td style="text-align: left;">Measured convergence rate from numerical experiments</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mathematical-symbols" class="level2">
+<h2 class="anchored" data-anchor-id="mathematical-symbols">Mathematical Symbols</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 35%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Symbol</th>
+<th style="text-align: left;">Full Name</th>
+<th style="text-align: left;">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>S(t)</strong></td>
+<td style="text-align: left;">Spot Price</td>
+<td style="text-align: left;">Current exchange rate at time t</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>K</strong></td>
+<td style="text-align: left;">Strike Price</td>
+<td style="text-align: left;">Agreed-upon exchange rate for the option</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>τ (tau)</strong></td>
+<td style="text-align: left;">Time to Maturity</td>
+<td style="text-align: left;">Time remaining until option expiration (τ = T - t)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>T</strong></td>
+<td style="text-align: left;">Maturity Date</td>
+<td style="text-align: left;">Expiration date of the option</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>r_d</strong></td>
+<td style="text-align: left;">Domestic Interest Rate</td>
+<td style="text-align: left;">Interest rate in the domestic currency</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>r_f</strong></td>
+<td style="text-align: left;">Foreign Interest Rate</td>
+<td style="text-align: left;">Interest rate in the foreign currency</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>σ (sigma)</strong></td>
+<td style="text-align: left;">Volatility</td>
+<td style="text-align: left;">Measure of how much the exchange rate fluctuates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Δt (Delta t)</strong></td>
+<td style="text-align: left;">Time Step</td>
+<td style="text-align: left;">Size of time interval in numerical methods</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>ΔS (Delta S)</strong></td>
+<td style="text-align: left;">Spatial Step</td>
+<td style="text-align: left;">Size of price interval in numerical grid</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>W_t</strong></td>
+<td style="text-align: left;">Wiener Process</td>
+<td style="text-align: left;">Mathematical model of random motion (Brownian motion)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>N(·)</strong></td>
+<td style="text-align: left;">Normal CDF</td>
+<td style="text-align: left;">Cumulative Distribution Function of standard normal distribution</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>n(·)</strong></td>
+<td style="text-align: left;">Normal PDF</td>
+<td style="text-align: left;">Probability Density Function of standard normal distribution</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>d₁, d₂</strong></td>
+<td style="text-align: left;">Auxiliary Variables</td>
+<td style="text-align: left;">Intermediate calculations in Black-Scholes-type formulas</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="technical-terms---student-friendly-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="technical-terms---student-friendly-definitions">Technical Terms - Student-Friendly Definitions</h2>
+<section id="financial-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="financial-concepts">Financial Concepts</h3>
+<p><strong>Option</strong> &gt; A contract giving the right (but not obligation) to buy or sell an asset at a predetermined price on or before a specific date. Think of it as “price insurance” for future transactions.</p>
+<p><strong>Call Option</strong> &gt; The right to BUY foreign currency at strike price K. You profit when the spot price goes UP above the strike.</p>
+<p><strong>Put Option</strong> &gt; The right to SELL foreign currency at strike price K. You profit when the spot price goes DOWN below the strike.</p>
+<p><strong>Intrinsic Value</strong> &gt; The profit you would make if you exercised the option RIGHT NOW. For calls: max(S - K, 0). For puts: max(K - S, 0).</p>
+<p><strong>Time Value</strong> &gt; The extra value beyond intrinsic value due to the possibility that the option could become more profitable before expiration. Time value = Option Price - Intrinsic Value.</p>
+<p><strong>Strike Price (K)</strong> &gt; The “locked-in” exchange rate you agreed to when buying the option. This is the price at which you can buy (call) or sell (put) the currency.</p>
+<p><strong>Spot Price (S)</strong> &gt; The current market exchange rate RIGHT NOW. This changes constantly based on market conditions.</p>
+<p><strong>Volatility (σ)</strong> &gt; How “jumpy” or unpredictable the exchange rate is. High volatility = big price swings = more valuable options (more chance of profit).</p>
+<p><strong>Interest Rate Differential (r_d - r_f)</strong> &gt; The difference between domestic and foreign interest rates. This affects the “drift” or expected direction of currency movement.</p>
+<p><strong>Hedging</strong> &gt; Reducing risk by taking offsetting positions. Like buying insurance to protect against unfavorable price movements.</p>
+<p><strong>Delta Hedging</strong> &gt; A strategy to eliminate directional risk by holding the right amount of the underlying currency to offset option price changes.</p>
+</section>
+<section id="the-greeks" class="level3">
+<h3 class="anchored" data-anchor-id="the-greeks">The Greeks</h3>
+<p><strong>Delta (Δ)</strong> &gt; How much the option price changes when the spot price moves by $1. Range: 0 to 1 for calls. Think of it as the “speed” of price change.</p>
+<p><strong>Gamma (Γ)</strong> &gt; How much Delta changes when the spot price moves. It measures the “curvature” or acceleration of option price changes. High gamma = Delta changes rapidly.</p>
+<p><strong>Vega (ν)</strong> &gt; How much the option price changes when volatility increases by 1%. High vega = very sensitive to market uncertainty.</p>
+<p><strong>Theta (Θ)</strong> &gt; How much the option loses value each day due to time passing. Usually negative (time decay). Think of it as the “cost of waiting.”</p>
+<p><strong>Rho (ρ)</strong> &gt; How much the option price changes when interest rates change by 1%. Less important for short-term options.</p>
+</section>
+<section id="mathematical-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-concepts">Mathematical Concepts</h3>
+<p><strong>Partial Differential Equation (PDE)</strong> &gt; An equation involving rates of change with respect to multiple variables (e.g., time AND price). The Garman-Kohlhagen PDE describes how option value evolves.</p>
+<p><strong>Stochastic Differential Equation (SDE)</strong> &gt; An equation describing how something random (like exchange rates) changes over time. “Stochastic” = involving randomness.</p>
+<p><strong>Brownian Motion / Wiener Process</strong> &gt; A mathematical model of continuous random movement, like a particle jiggling in water. Used to model unpredictable price changes.</p>
+<p><strong>Risk-Neutral Measure</strong> &gt; A mathematical “world” where all assets earn the risk-free rate on average. Not the real world, but makes pricing easier!</p>
+<p><strong>Itô’s Lemma</strong> &gt; A calculus rule for functions of random processes. It’s like the chain rule, but for stochastic processes. Essential for deriving the PDE.</p>
+<p><strong>No-Arbitrage Principle</strong> &gt; The idea that you can’t make risk-free profit from price differences. If you could, everyone would do it until prices adjust.</p>
+<p><strong>Boundary Conditions</strong> &gt; Rules specifying option values at the edges of our domain (e.g., when S = 0 or S = ∞, or at expiration T).</p>
+<p><strong>Terminal Condition</strong> &gt; The option value at expiration. For calls: max(S - K, 0). For puts: max(K - S, 0). This is where we start solving backward in time.</p>
+</section>
+<section id="numerical-methods-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="numerical-methods-concepts">Numerical Methods Concepts</h3>
+<p><strong>Finite Difference Method</strong> &gt; A technique to solve PDEs by replacing continuous derivatives with discrete approximations on a grid. Like approximating a smooth curve with small straight line segments.</p>
+<p><strong>Grid / Mesh</strong> &gt; A set of discrete points in space and time where we calculate option values. Think of it as a spreadsheet with rows (prices) and columns (times).</p>
+<p><strong>Explicit Method (FTCS)</strong> &gt; Directly calculates future values from current values. Fast but can be unstable (blow up) if time steps are too large.</p>
+<p><strong>Implicit Method (BTCS, CN)</strong> &gt; Solves a system of equations to find future values. Slower per step but stable for any time step size.</p>
+<p><strong>Stability</strong> &gt; Whether small errors stay small (stable) or grow exponentially (unstable). Unstable methods produce garbage results.</p>
+<p><strong>Convergence</strong> &gt; As we make the grid finer (smaller Δt and ΔS), the numerical solution approaches the true analytical solution.</p>
+<p><strong>Truncation Error</strong> &gt; The error introduced by approximating derivatives with finite differences. Smaller grid spacing = smaller error.</p>
+<p><strong>Order of Accuracy</strong> &gt; How fast the error decreases as grid spacing shrinks. First-order: error ∝ Δt. Second-order: error ∝ (Δt)² (much better!).</p>
+<p><strong>CFL Condition</strong> &gt; A stability requirement for explicit methods: Δt must be small enough relative to ΔS. Named after Courant, Friedrichs, and Lewy.</p>
+<p><strong>Tridiagonal Matrix</strong> &gt; A matrix with non-zero elements only on three diagonals (main diagonal and one above/below). Arises naturally in finite difference methods and can be solved efficiently.</p>
+<p><strong>Thomas Algorithm</strong> &gt; An efficient method to solve tridiagonal systems. Much faster than general matrix inversion (O(n) vs O(n³)).</p>
+</section>
+<section id="advanced-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-concepts">Advanced Concepts</h3>
+<p><strong>Put-Call Parity</strong> &gt; A relationship between call and put prices: C - P = S·e^(-r_f·τ) - K·e^(-r_d·τ). Prevents arbitrage opportunities.</p>
+<p><strong>Von Neumann Stability Analysis</strong> &gt; A mathematical technique to determine if a numerical method is stable by testing how Fourier modes (wave-like patterns) evolve.</p>
+<p><strong>Amplification Factor (ξ)</strong> &gt; In stability analysis, how much errors grow (or shrink) per time step. |ξ| ≤ 1 means stable.</p>
+<p><strong>Courant Number / CFL Number (λ)</strong> &gt; A dimensionless parameter λ = σ²S²Δt/ΔS² that determines stability for explicit methods. Must be ≤ 0.5 for FTCS.</p>
+<p><strong>Unconditional Stability</strong> &gt; A method that is stable for ANY time step size (BTCS and CN have this property). Very desirable for practical use!</p>
+<p><strong>Second-Order Accuracy</strong> &gt; Error decreases with the square of grid spacing. If you halve Δt, error drops by 4×. Much better than first-order (only 2× improvement).</p>
+<p><strong>Garman-Kohlhagen Model</strong> &gt; Extension of Black-Scholes to currency options, accounting for foreign interest rates. Published in 1983.</p>
+<p><strong>Closed-Form Solution</strong> &gt; An exact formula you can write down and compute directly (like the Garman-Kohlhagen formulas). Opposite of numerical approximation.</p>
+<hr>
+</section>
+</section>
+<section id="quick-reference-common-notation-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="quick-reference-common-notation-patterns">Quick Reference: Common Notation Patterns</h2>
+<ul>
+<li><strong>Subscripts (e.g., V_i^n)</strong>: Position on grid. i = space index, n = time index</li>
+<li><strong>Superscripts in math (e.g., S²)</strong>: Exponents (S squared)</li>
+<li><strong>Partial derivatives (∂V/∂S)</strong>: Rate of change of V with respect to S, holding other variables constant</li>
+<li><strong>exp(-r·τ)</strong>: Exponential function, same as e^(-r·τ), used for discounting future values</li>
+<li><strong>max(a, b)</strong>: Maximum of a and b. Returns whichever is larger</li>
+<li><strong>O(Δt²)</strong>: “Big O notation” - describes how error scales with grid size</li>
+</ul>
+<hr>
+</section>
+<section id="tips-for-understanding-the-presentation" class="level2">
+<h2 class="anchored" data-anchor-id="tips-for-understanding-the-presentation">Tips for Understanding the Presentation</h2>
+<ol type="1">
+<li><strong>Start with intuition</strong>: Understand WHAT each concept means before diving into HOW to calculate it</li>
+<li><strong>Follow the Greeks</strong>: Delta, Gamma, Vega, Theta are your friends for understanding option behavior</li>
+<li><strong>Stability matters</strong>: An unstable numerical method is useless, no matter how fast</li>
+<li><strong>CN is the winner</strong>: Crank-Nicolson combines the best of both worlds (stable + accurate)</li>
+<li><strong>Visualizations tell the story</strong>: Pay attention to the plots - they show what the math means</li>
+<li><strong>ATM is special</strong>: Most action happens near the strike price (S ≈ K)</li>
+</ol>
+<hr>
+<p><em>This glossary is designed to accompany the “Garman-Kohlhagen European Currency Option Pricing” presentation.</em></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

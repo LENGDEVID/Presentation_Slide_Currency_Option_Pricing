@@ -651,6 +651,7 @@ def crank_nicolson(S_min, S_max, M, T, N, K, rd, rf, sigma, option_type='call'):
         b[0] = 0
         b[M] = S_max - K*np.exp(-rd*tau) if option_type == 'call' else 0
         
+        
         # Thomas algorithm (tridiagonal solver)
         V = thomas_algorithm(alpha, beta+1, gamma, b)
     
@@ -756,7 +757,7 @@ for ax in [ax1, ax2]:
 # Stable comparison
 ax1.plot(S_stable, V_analytical, 'k-', linewidth=3, label='Analytical', alpha=0.8)
 ax1.plot(S_stable, V_stable, 'b--', linewidth=2, label='FTCS (N=1000, stable)', alpha=0.7)
-ax1.plot(S_num, V_num, 'r:', linewidth=2, label='Crank-Nicolson (N=200)', alpha=0.7)
+# ax1.plot(S_num, V_num, 'r:', linewidth=2, label='Crank-Nicolson (N=200)', alpha=0.7)
 ax1.set_xlabel('Spot Price S', fontsize=12, fontweight='bold')
 ax1.set_ylabel('Call Option Price', fontsize=12, fontweight='bold')
 ax1.set_title('Stable Numerical Solutions', fontsize=14, fontweight='bold')
@@ -791,10 +792,9 @@ FTCS requires $\Delta t < 10^{-4}$ for stability with this grid. BTCS/CN have no
 
 ::: {.callout-tip}
 ## Key Insights: Stability in Action
-- **Left plot**: All three methods (Analytical, FTCS, CN) overlap perfectly when stable → numerical methods work when conditions are right
+- **Left plot**: All 2 methods (Analytical, FTCS, CN) overlap perfectly when stable → numerical methods work when conditions are right
 - **Right plot (CFL diagram)**: Green zone = safe for FTCS, red zone = unstable and will explode
 - **Critical lesson**: FTCS needs tiny time steps (Δt < 10⁻⁴) → requires 1000+ steps, very expensive!
-- **BTCS/CN advantage**: No stability restriction → can use 5-10× larger time steps → much faster computation
 - **Why this matters**: In production, you want methods that "just work" without worrying about stability crashes
 :::
 
