@@ -333,6 +333,16 @@ plt.show()
 Time value decreases as maturity approaches. Options converge to intrinsic value at expiry.
 :::
 
+::: {.callout-tip}
+## Key Insights: Option Price Behavior
+- **Color gradient shows time value**: Darker curves (longer τ) are further above intrinsic value (gray shaded area) → more time = more optionality
+- **All curves converge to payoff**: As τ → 0 (red curve), option price approaches max(S-K, 0) for calls or max(K-S, 0) for puts → time value disappears
+- **Strike price (K=100) is the pivot**: Left of strike = out-of-the-money, right of strike = in-the-money for calls (opposite for puts)
+- **Deep ITM behavior**: Far right, curves become nearly parallel to intrinsic value → mostly intrinsic, minimal time value
+- **Deep OTM behavior**: Far left, curves flatten near zero → low probability of finishing in-the-money, small time value
+- **Maximum time value at ATM**: Near strike (S ≈ K), gap between curves and intrinsic value is largest → highest uncertainty = highest optionality
+:::
+
 # Part III: The Greeks 
 
 ## Option Greeks: Risk Sensitivities {.scrollable}
