@@ -272,7 +272,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li class="fragment"><strong>Corporate Finance</strong>: Manage international cash flows</li>
 </ul>
 <h3 id="historical-development">Historical Development</h3>
-<div id="1cdb9428" class="cell" data-execution_count="1">
+<div id="f10f5ce1" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -362,7 +362,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li><strong><span class="math inline">\(W_t\)</span></strong>: Standard Brownian motion</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="027619e0" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
+<div id="5c4a4cf8" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -443,7 +443,7 @@ d_2 = d_1 - \sigma\sqrt{\tau}
 </section>
 <section id="implementation-validation" class="slide level2 scrollable">
 <h2>Implementation &amp; Validation</h2>
-<div id="11e64712" class="cell" data-execution_count="3">
+<div id="a00ff3d8" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -479,7 +479,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="option-price-behavior" class="slide level2 scrollable">
 <h2>Option Price Behavior</h2>
-<div id="992babf2" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
+<div id="3155579c" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -498,6 +498,26 @@ Put-Call Parity Check: True</code></pre>
 </div>
 <div class="callout-content">
 <p>Time value decreases as maturity approaches. Options converge to intrinsic value at expiry.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Key Insights: Option Price Behavior</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>Color gradient shows time value</strong>: Darker curves (longer τ) are further above intrinsic value (gray shaded area) → more time = more optionality</li>
+<li><strong>All curves converge to payoff</strong>: As τ → 0 (red curve), option price approaches max(S-K, 0) for calls or max(K-S, 0) for puts → time value disappears</li>
+<li><strong>Strike price (K=100) is the pivot</strong>: Left of strike = out-of-the-money, right of strike = in-the-money for calls (opposite for puts)</li>
+<li><strong>Deep ITM behavior</strong>: Far right, curves become nearly parallel to intrinsic value → mostly intrinsic, minimal time value</li>
+<li><strong>Deep OTM behavior</strong>: Far left, curves flatten near zero → low probability of finishing in-the-money, small time value</li>
+<li><strong>Maximum time value at ATM</strong>: Near strike (S ≈ K), gap between curves and intrinsic value is largest → highest uncertainty = highest optionality</li>
+</ul>
 </div>
 </div>
 </div>
@@ -553,7 +573,7 @@ Put-Call Parity Check: True</code></pre>
 </tbody>
 </table>
 </div>
-<div id="ea9d972c" class="cell" data-execution_count="5">
+<div id="dfc3e6d9" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">def</span> greeks_call(S, K, rd, rf, sigma, tau):</span>
@@ -574,7 +594,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="greeks-visualization" class="slide level2 scrollable">
 <h2>Greeks Visualization</h2>
-<div id="6913df00" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
+<div id="a375d190" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -606,7 +626,7 @@ Put-Call Parity Check: True</code></pre>
 <section id="delta-hedging-application" class="slide level2 scrollable">
 <h2>Delta Hedging Application</h2>
 <h3 id="practical-risk-management">Practical Risk Management</h3>
-<div id="ae0d5306" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
+<div id="50017ebb" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -672,7 +692,7 @@ Put-Call Parity Check: True</code></pre>
 <li><span class="math inline">\(V_M^n = S_M - K e^{-r_d(T-t_n)}\)</span> (S → ∞)</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="d4127eb4" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
+<div id="f7ca2c29" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -761,7 +781,7 @@ V_i^{n+1} = V_i^n + \Delta t \left[ (r_d - r_f)S_i \frac{V_{i+1}^{n+1} - V_{i-1}
 </section>
 <section id="implementation-example" class="slide level2 scrollable">
 <h2>Implementation Example</h2>
-<div id="1183e79a" class="cell" data-execution_count="9">
+<div id="48a4c680" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">def</span> crank_nicolson(S_min, S_max, M, T, N, K, rd, rf, sigma, option_type<span class="op">=</span><span class="st">'call'</span>):</span>
@@ -889,7 +909,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="stability-demonstration" class="slide level2 scrollable">
 <h2>Stability Demonstration</h2>
-<div id="75d4e25e" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
+<div id="d2ae0966" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -983,7 +1003,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="convergence-study-results" class="slide level2 scrollable">
 <h2>Convergence Study Results</h2>
-<div id="a5bff8dc" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="11">
+<div id="974541d8" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1027,7 +1047,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="accuracy-vs-computational-cost" class="slide level2 scrollable">
 <h2>Accuracy vs Computational Cost</h2>
-<div id="960df1ff" class="cell" data-fig-height="6" data-fig-width="12" data-execution_count="12">
+<div id="8df5d8ac" class="cell" data-fig-height="6" data-fig-width="12" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1068,7 +1088,7 @@ Method   N     Error  Cost
 </section>
 <section id="d-option-price-surface" class="slide level2 scrollable">
 <h2>3D Option Price Surface</h2>
-<div id="41b50e4b" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="13">
+<div id="ed4eae7f" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1112,7 +1132,7 @@ Method   N     Error  Cost
 </section>
 <section id="time-evolution-of-option-prices" class="slide level2 scrollable">
 <h2>Time Evolution of Option Prices</h2>
-<div id="815f7117" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="14">
+<div id="2f21d577" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1156,7 +1176,7 @@ Method   N     Error  Cost
 </section>
 <section id="numerical-vs-analytical-comparison" class="slide level2 scrollable">
 <h2>Numerical vs Analytical Comparison</h2>
-<div id="e94964e0" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="15">
+<div id="b5b4821c" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1214,7 +1234,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="method-comparison-summary" class="slide level2 scrollable">
 <h2>Method Comparison Summary</h2>
-<div id="54daaa60" class="cell" data-execution_count="16">
+<div id="3bb06b91" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1295,7 +1315,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="computational-performance" class="slide level2 scrollable">
 <h2>Computational Performance</h2>
-<div id="a0717d7e" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="17">
+<div id="8109ef49" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1349,7 +1369,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="key-findings" class="slide level2 scrollable">
 <h2>Key Findings</h2>
-<div id="28fb50d7" class="cell" data-execution_count="18">
+<div id="94d86b4c" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
