@@ -11,7 +11,7 @@
 
   <meta name="author" content="Group Members: Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang Professor: Dr.&nbsp;LUEY Sokea">
   <meta name="dcterms.date" content="2026-01-29">
-  <title>Garman-Kohlhagen European FX Option Pricing</title>
+  <title>Garman-Kohlhagen European Currency Option Pricing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -96,7 +96,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/theme/quarto-1983532468cdb5230f100e0c36122467.css">
+  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/theme/quarto-4775203abba70060a3f3d230391c52e9.css">
   <link href="presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="presentation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -197,7 +197,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Garman-Kohlhagen European FX Option Pricing</h1>
+  <h1 class="title">Garman-Kohlhagen European Currency Option Pricing</h1>
   <p class="subtitle">From Theory to Implementation: A Complete PDE Analysis</p>
 
 <div class="quarto-title-authors">
@@ -272,7 +272,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li class="fragment"><strong>Corporate Finance</strong>: Manage international cash flows</li>
 </ul>
 <h3 id="historical-development">Historical Development</h3>
-<div id="86173b56" class="cell" data-execution_count="1">
+<div id="1826cbcb" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -362,7 +362,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li><strong><span class="math inline">\(W_t\)</span></strong>: Standard Brownian motion</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="19aa37ee" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
+<div id="7e83f674" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -443,7 +443,7 @@ d_2 = d_1 - \sigma\sqrt{\tau}
 </section>
 <section id="implementation-validation" class="slide level2 scrollable">
 <h2>Implementation &amp; Validation</h2>
-<div id="30d60606" class="cell" data-execution_count="3">
+<div id="c3056ed0" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -479,7 +479,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="option-price-behavior" class="slide level2 scrollable">
 <h2>Option Price Behavior</h2>
-<div id="efdbd02b" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
+<div id="d1449447" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -553,7 +553,7 @@ Put-Call Parity Check: True</code></pre>
 </tbody>
 </table>
 </div>
-<div id="260f60e1" class="cell" data-execution_count="5">
+<div id="04b01f1b" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">def</span> greeks_call(S, K, rd, rf, sigma, tau):</span>
@@ -574,7 +574,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="greeks-visualization" class="slide level2 scrollable">
 <h2>Greeks Visualization</h2>
-<div id="1668f25e" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
+<div id="99f0bcbd" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -587,7 +587,7 @@ Put-Call Parity Check: True</code></pre>
 <section id="delta-hedging-application" class="slide level2 scrollable">
 <h2>Delta Hedging Application</h2>
 <h3 id="practical-risk-management">Practical Risk Management</h3>
-<div id="13a740da" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
+<div id="f0be9189" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -634,7 +634,7 @@ Put-Call Parity Check: True</code></pre>
 <li><span class="math inline">\(V_M^n = S_M - K e^{-r_d(T-t_n)}\)</span> (S → ∞)</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="7ba4e20a" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
+<div id="216cb5de" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -723,7 +723,7 @@ V_i^{n+1} = V_i^n + \Delta t \left[ (r_d - r_f)S_i \frac{V_{i+1}^{n+1} - V_{i-1}
 </section>
 <section id="implementation-example" class="slide level2 scrollable">
 <h2>Implementation Example</h2>
-<div id="b73ad4d5" class="cell" data-execution_count="9">
+<div id="38011c6d" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">def</span> crank_nicolson(S_min, S_max, M, T, N, K, rd, rf, sigma, option_type<span class="op">=</span><span class="st">'call'</span>):</span>
@@ -851,7 +851,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="stability-demonstration" class="slide level2 scrollable">
 <h2>Stability Demonstration</h2>
-<div id="85bde966" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
+<div id="284f336a" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -926,7 +926,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="convergence-study-results" class="slide level2 scrollable">
 <h2>Convergence Study Results</h2>
-<div id="ecef768c" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="11">
+<div id="166fab7c" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -951,7 +951,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="accuracy-vs-computational-cost" class="slide level2 scrollable">
 <h2>Accuracy vs Computational Cost</h2>
-<div id="7821c6e9" class="cell" data-fig-height="6" data-fig-width="12" data-execution_count="12">
+<div id="eeb6236f" class="cell" data-fig-height="6" data-fig-width="12" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -992,7 +992,7 @@ Method   N     Error  Cost
 </section>
 <section id="d-option-price-surface" class="slide level2 scrollable">
 <h2>3D Option Price Surface</h2>
-<div id="20d3efec" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="13">
+<div id="911d2d26" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1017,7 +1017,7 @@ Method   N     Error  Cost
 </section>
 <section id="time-evolution-of-option-prices" class="slide level2 scrollable">
 <h2>Time Evolution of Option Prices</h2>
-<div id="21d6f675" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="14">
+<div id="2ce4dd4d" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1042,7 +1042,7 @@ Method   N     Error  Cost
 </section>
 <section id="numerical-vs-analytical-comparison" class="slide level2 scrollable">
 <h2>Numerical vs Analytical Comparison</h2>
-<div id="52b573de" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="15">
+<div id="f12dff69" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1080,7 +1080,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="method-comparison-summary" class="slide level2 scrollable">
 <h2>Method Comparison Summary</h2>
-<div id="5eb86617" class="cell" data-execution_count="16">
+<div id="2cd6129f" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1141,7 +1141,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="computational-performance" class="slide level2 scrollable">
 <h2>Computational Performance</h2>
-<div id="acd158b3" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="17">
+<div id="a54d1ba2" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1195,7 +1195,7 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="key-findings" class="slide level2 scrollable">
 <h2>Key Findings</h2>
-<div id="5224eaa7" class="cell" data-execution_count="18">
+<div id="58371571" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-display">
 <div>
 <figure>

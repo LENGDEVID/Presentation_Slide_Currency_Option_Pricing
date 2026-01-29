@@ -371,3 +371,14 @@ section[data-background-color="#2c5f8d"],
     font-size: 12pt;
   }
 }
+
+/* Add this to the bottom of your custom.scss */
+.reveal .slide-number {
+  display: block !important;
+  color: #1e3a5f !important; /* Dark blue for visibility */
+  background-color: rgba(255, 255, 255, 0.7) !important; /* Semi-transparent white box */
+  z-index: 99 !important;    /* Forces it to the front layer */
+  font-weight: bold;
+  bottom: 8px !important;
+  right: 8px !important;
+}

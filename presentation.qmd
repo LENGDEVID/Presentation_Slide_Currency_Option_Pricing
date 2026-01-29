@@ -1,6 +1,6 @@
 
 ---
-title: "Garman-Kohlhagen European FX Option Pricing"
+title: "Garman-Kohlhagen European Currency Option Pricing"
 subtitle: "From Theory to Implementation: A Complete PDE Analysis"
 author: "Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Professor: Dr. LUEY Sokea"
 date: today
@@ -8,6 +8,7 @@ format:
   revealjs:
     theme: [default, custom.scss]
     slide-number: true
+    show-slide-number: all
     chalkboard: true
     preview-links: auto
     transition: slide
@@ -17,7 +18,6 @@ format:
     scrollable: true
     smaller: false
     incremental: false
-    # CHANGE THIS LINE BELOW:
     embed-resources: false 
     output-file: index.html 
     footer: "Garman-Kohlhagen FX Option Pricing | Group Project"
@@ -54,7 +54,6 @@ Bridge theoretical finance with computational methods for pricing European curre
 :::
 
 # Part I: Theory & Foundations 
-
 
 ## Motivation & Market Context {.scrollable}
 
