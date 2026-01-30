@@ -464,71 +464,69 @@ plt.show()
 
 ### Practical Risk Management
 
+
 ```{python}
-#| echo: false
-#| fig-width: 14
-#| fig-height: 6
+from scipy.stats import norm
+import numpy as np
 
-np.random.seed(100)
-S0, steps, dt = 100, 50, 1/252
-S_path = [S0]
-for _ in range(steps):
-    dS = (rd - rf)*S_path[-1]*dt + sigma*S_path[-1]*np.sqrt(dt)*np.random.randn()
-    S_path.append(S_path[-1] + dS)
-S_path = np.array(S_path)
-
-tau_path = 0.5 - np.arange(len(S_path))*dt
-unhedged_pnl, hedged_pnl = [0], [0]
-
-for i in range(1, len(S_path)):
-    if tau_path[i] <= 0:
-        break
+def gk_greeks(S, K, rd, rf, sigma, tau, opt='call'):
+    # Handle the boundary case (at expiry)
+    if tau <= 1e-10:
+        delta = 1.0 if S > K and opt=='call' else (-1.0 if S < K and opt=='put' else 0.0)
+        return {'delta': delta, 'gamma': 0, 'vega': 0, 'theta': 0}
     
-    V_old = gk_call(S_path[i-1], K, rd, rf, sigma, tau_path[i-1])
-    V_new = gk_call(S_path[i], K, rd, rf, sigma, tau_path[i])
-    delta_old = greeks_call(S_path[i-1], K, rd, rf, sigma, tau_path[i-1])['Delta']
+    # Standard Garman-Kohlhagen d1 calculation
+    d1 = (np.log(S / K) + (rd - rf + 0.5 * sigma**2) * tau) / (sigma * np.sqrt(tau))
     
-    unhedged_pnl.append(unhedged_pnl[-1] + (V_new - V_old))
-    hedged_pnl.append(hedged_pnl[-1] + (V_new - V_old) - delta_old*(S_path[i] - S_path[i-1]))
+    if opt == 'call':
+        # Delta for FX Call: e^(-rf * tau) * N(d1)
+        delta = np.exp(-rf * tau) * norm.cdf(d1)
+    else:
+        # Delta for FX Put: e^(-rf * tau) * (N(d1) - 1)
+        delta = np.exp(-rf * tau) * (norm.cdf(d1) - 1)
+        
+    return {'delta': delta} # Add gamma, vega, theta calculations here as needed
+S_scenarios = np.linspace(90, 110, 21)
+tau_hedge = 0.5
+delta_hedge = gk_greeks(S0, K, rd, rf, sigma, tau_hedge)['delta']
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6), facecolor='#f8f9fa')
-for ax in [ax1, ax2]:
-    ax.set_facecolor('#f8f9fa')
+unhedged_pnl, hedged_pnl = [], []
+for S_new in S_scenarios:
+    V_new = gk_call(S_new, K, rd, rf, sigma, tau_hedge)
+    V_old = gk_call(S0, K, rd, rf, sigma, tau_hedge)
+    pnl_opt = V_new - V_old
+    pnl_hedge = -delta_hedge * (S_new - S0)
+    unhedged_pnl.append(pnl_opt)
+    hedged_pnl.append(pnl_opt + pnl_hedge)
 
-time_axis = np.arange(len(unhedged_pnl)) * dt
-ax1.plot(time_axis, unhedged_pnl, color='#e74c3c', linewidth=2.5, label='Unhedged', alpha=0.8)
-ax1.plot(time_axis, hedged_pnl, color='#2ecc71', linewidth=2.5, label='Delta-Hedged', alpha=0.8)
-ax1.axhline(0, color='black', linestyle='--', linewidth=1, alpha=0.4)
-ax1.fill_between(time_axis, unhedged_pnl, alpha=0.2, color='#e74c3c')
-ax1.fill_between(time_axis, hedged_pnl, alpha=0.2, color='#2ecc71')
-ax1.set_xlabel('Time (years)', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Cumulative P&L', fontsize=12, fontweight='bold')
-ax1.set_title('Delta Hedging Performance', fontsize=14, fontweight='bold')
-ax1.legend(fontsize=11)
-ax1.grid(True, alpha=0.3)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+ax1.plot(S_scenarios, unhedged_pnl, 'r-', linewidth=2.5, label='Unhedged', alpha=0.7)
+ax1.plot(S_scenarios, hedged_pnl, 'b-', linewidth=2.5, label='Delta-Hedged', alpha=0.7)
+ax1.axhline(0, color='k', linestyle='--', alpha=0.5)
+ax1.axvline(S0, color='gray', linestyle=':', alpha=0.5)
+ax1.set_xlabel('Spot Price'); ax1.set_ylabel('P&L')
+ax1.set_title('Delta-Hedging Effect'); ax1.legend(); ax1.grid(True, alpha=0.3)
 
 risk_reduction = (1 - np.std(hedged_pnl)/np.std(unhedged_pnl)) * 100
-ax2.bar(['Unhedged', 'Delta-Hedged'], [np.std(unhedged_pnl), np.std(hedged_pnl)], 
-        color=['#e74c3c', '#2ecc71'], alpha=0.7, edgecolor='black', linewidth=2)
-ax2.set_ylabel('P&L Volatility', fontsize=12, fontweight='bold')
-ax2.set_title(f'Risk Reduction: {risk_reduction:.1f}%', fontsize=14, fontweight='bold')
+ax2.bar(['Unhedged', 'Hedged'], [np.std(unhedged_pnl), np.std(hedged_pnl)], color=['red','blue'], alpha=0.7)
+ax2.set_ylabel('P&L Std Dev (Risk)')
+ax2.set_title(f'Risk Reduction: {risk_reduction:.1f}%')
 ax2.grid(True, alpha=0.3, axis='y')
 
-plt.tight_layout()
-plt.show()
+plt.tight_layout(); plt.show()
+print(f"\nDelta-hedging reduces risk by {risk_reduction:.0f}%. Residual risk from gamma/vega.")
 ```
 
 ::: {.callout-tip}
 ## Result
-Delta-hedging reduces P&L volatility by ~90%. Residual risk from gamma/vega effects.
+Delta-hedging reduces P&L volatility by ~87%. Residual risk from gamma/vega effects.
 :::
 
 ::: {.callout-note}
 ## Key Insights: Delta Hedging in Practice
-- **90% risk reduction**: Unhedged P&L swings wildly with spot moves, but delta-hedged position stays nearly flat
+- **87% risk reduction**: Unhedged P&L swings wildly with spot moves, but delta-hedged position stays nearly flat
 - **Left plot shows effectiveness**: Red (unhedged) has large swings, green (hedged) stays close to zero → hedging works!
-- **Right plot quantifies risk**: Volatility drops dramatically from ~$3-4 to ~$0.3-0.4 → much safer position
-- **Residual 10% risk comes from**: Gamma (Delta changes between rebalances), Vega (volatility shifts), and discrete rebalancing
+- **Residual 13% risk comes from**: Gamma (Delta changes between rebalances), Vega (volatility shifts), and discrete rebalancing
 - **Real-world application**: Market makers use this to provide liquidity without taking directional bets on currency moves
 :::
 
