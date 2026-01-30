@@ -185,7 +185,7 @@ $$
 Construct portfolio: $\Pi = V - \Delta S$ where $\Delta = \frac{\partial V}{\partial S}$
 
 $$
-d\Pi = dV - \Delta dS - r_f \Delta S \, dt
+d\Pi = dV - \Delta dS
 $$
 
 ::: {.callout-tip}
@@ -840,76 +840,207 @@ CN achieves same accuracy with **4x larger** time steps
 
 ## Convergence Study Results {.scrollable}
 
+
+
 ```{python}
-#| echo: false
-#| fig-width: 14
-#| fig-height: 6
 
-# Convergence study
-N_values = np.array([50, 100, 200, 400, 800])
-M_fixed = 200
-errors_cn = []
-errors_btcs = []
+import numpy as np
+import time
+from scipy.stats import norm
 
-for N in N_values:
-    S_cn, V_cn = crank_nicolson(50, 150, M_fixed, 1.0, N, K, rd, rf, sigma)
-    V_exact = np.array([gk_call(s, K, rd, rf, sigma, 1.0) for s in S_cn])
-    errors_cn.append(np.max(np.abs(V_cn - V_exact)))
+# 1. Analytical Solution (Garman-Kohlhagen)
+def gk_call(S, K, rd, rf, sigma, tau):
+    if tau <= 0: return np.maximum(S - K, 0)
+    d1 = (np.log(S/K) + (rd - rf + 0.5*sigma**2)*tau) / (sigma*np.sqrt(tau))
+    d2 = d1 - sigma*np.sqrt(tau)
+    return S*np.exp(-rf*tau)*norm.cdf(d1) - K*np.exp(-rd*tau)*norm.cdf(d2)
 
-# Simulate BTCS errors (first-order)
-errors_btcs = [errors_cn[0] * (N_values[0]/N) for N in N_values]
 
-# Theoretical slopes
-dt_values = 1.0 / N_values
-slope_cn = errors_cn[0] * (dt_values / dt_values[0])**2
-slope_btcs = errors_btcs[0] * (dt_values / dt_values[0])
+def thomas1(a, b, c, d):
+    """Tridiagonal solver"""
+    n = len(b)
+    c_star, d_star, x = np.zeros(n-1), np.zeros(n), np.zeros(n)
+    c_star[0], d_star[0] = c[0]/b[0], d[0]/b[0]
+    for i in range(1, n-1):
+        denom = b[i] - a[i-1]*c_star[i-1]
+        c_star[i] = c[i] / denom
+        d_star[i] = (d[i] - a[i-1]*d_star[i-1]) / denom
+    d_star[n-1] = (d[n-1] - a[n-2]*d_star[n-2]) / (b[n-1] - a[n-2]*c_star[n-2])
+    x[n-1] = d_star[n-1]
+    for i in range(n-2, -1, -1):
+        x[i] = d_star[i] - c_star[i]*x[i+1]
+    return x
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6), facecolor='#f8f9fa')
-for ax in [ax1, ax2]:
-    ax.set_facecolor('#f8f9fa')
+def ftcs(S, K, rd, rf, sigma, T, M, N):
+    """FTCS scheme"""
+    dS, dt = S[1]-S[0], T/N
+    V = np.zeros((N+1, M+1))
+    V[N,:] = np.maximum(S - K, 0)  # Terminal condition
+    V[:,0] = 0; V[:,M] = S[M] - K*np.exp(-rd*(T-np.linspace(0,T,N+1)))  # Boundaries
+    
+    for n in range(N-1, -1, -1):
+        for i in range(1, M):
+            alpha = 0.5*dt*((sigma*S[i])**2/dS**2 - (rd-rf)*S[i]/dS)
+            beta = -dt*((sigma*S[i])**2/dS**2 + rd)
+            gamma = 0.5*dt*((sigma*S[i])**2/dS**2 + (rd-rf)*S[i]/dS)
+            V[n,i] = alpha*V[n+1,i-1] + (1+beta)*V[n+1,i] + gamma*V[n+1,i+1]
+    return V
 
-# Log-log convergence plot
-ax1.loglog(dt_values, errors_cn, 'o-', color='#2ecc71', linewidth=2.5, markersize=10, 
-           label='Crank-Nicolson (measured)', alpha=0.8)
-ax1.loglog(dt_values, errors_btcs, 's-', color='#e74c3c', linewidth=2.5, markersize=10, 
-           label='BTCS (measured)', alpha=0.8)
-ax1.loglog(dt_values, slope_cn, '--', color='#2ecc71', linewidth=2, 
-           label='O(Δt²) reference', alpha=0.6)
-ax1.loglog(dt_values, slope_btcs, '--', color='#e74c3c', linewidth=2, 
-           label='O(Δt) reference', alpha=0.6)
-ax1.set_xlabel('Time Step Δt', fontsize=12, fontweight='bold')
-ax1.set_ylabel('L∞ Error', fontsize=12, fontweight='bold')
-ax1.set_title('Temporal Convergence Analysis', fontsize=14, fontweight='bold')
-ax1.legend(fontsize=10)
-ax1.grid(True, alpha=0.3, which='both')
+def btcs(S, K, rd, rf, sigma, T, M, N):
+    """BTCS scheme"""
+    dS, dt = S[1]-S[0], T/N
+    V = np.zeros((N+1, M+1))
+    V[N,:] = np.maximum(S - K, 0)
+    V[:,0] = 0; V[:,M] = S[M] - K*np.exp(-rd*(T-np.linspace(0,T,N+1)))
+    
+    for n in range(N-1, -1, -1):
+        a, b, c, d = np.zeros(M-1), np.zeros(M-1), np.zeros(M-1), np.zeros(M-1)
+        for i in range(1, M):
+            idx = i-1
+            alpha = -0.5*dt*((sigma*S[i])**2/dS**2 - (rd-rf)*S[i]/dS)
+            beta = 1 + dt*((sigma*S[i])**2/dS**2 + rd)
+            gamma = -0.5*dt*((sigma*S[i])**2/dS**2 + (rd-rf)*S[i]/dS)
+            if idx > 0: a[idx] = alpha
+            if idx < M-2: c[idx] = gamma
+            b[idx] = beta
+            d[idx] = V[n+1,i]
+            if i == 1: d[idx] -= alpha*V[n,0]
+            if i == M-1: d[idx] -= gamma*V[n,M]
+        V[n,1:M] = thomas1(a[1:], b, c[:-1], d)
+    return V
 
-# Empirical Order of Accuracy
-eoa_cn = [np.log(errors_cn[i]/errors_cn[i+1])/np.log(N_values[i+1]/N_values[i]) 
-          for i in range(len(N_values)-1)]
-eoa_btcs = [np.log(errors_btcs[i]/errors_btcs[i+1])/np.log(N_values[i+1]/N_values[i]) 
-            for i in range(len(N_values)-1)]
+# 3. Corrected Crank-Nicolson Function
+def crank_nicolson(S, K, rd, rf, sigma, T, M, N):
+    """Crank-Nicolson scheme for Garman-Kohlhagen PDE"""
+    # Ensure S is an array to avoid IndexError
+    dS = S[1] - S[0]
+    dt = T / N
+    V = np.zeros((N + 1, M + 1))
+    
+    # Initial Condition at Expiry (T)
+    V[N, :] = np.maximum(S - K, 0)
+    
+    # Boundary Conditions for all time steps
+    tau_grid = T - np.linspace(0, T, N + 1)
+    V[:, 0] = 0 # S -> 0
+    # Corrected Boundary for FX: include exp(-rf * tau)
+    V[:, M] = S[M] * np.exp(-rf * tau_grid) - K * np.exp(-rd * tau_grid)
 
-x_pos = np.arange(len(eoa_cn))
-width = 0.35
+    for n in range(N - 1, -1, -1):
+        a_lhs, b_lhs, c_lhs = np.zeros(M - 1), np.zeros(M - 1), np.zeros(M - 1)
+        a_rhs, b_rhs, c_rhs = np.zeros(M - 1), np.zeros(M - 1), np.zeros(M - 1)
+        rhs = np.zeros(M - 1)
+        
+        for i in range(1, M):
+            idx = i - 1
+            # Crank-Nicolson Coefficients
+            alpha = 0.25 * dt * ((sigma * S[i])**2 / dS**2 - (rd - rf) * S[i] / dS)
+            beta  = 0.5  * dt * ((sigma * S[i])**2 / dS**2 + rd)
+            gamma = 0.25 * dt * ((sigma * S[i])**2 / dS**2 + (rd - rf) * S[i] / dS)
+            
+            # Populate LHS and RHS diagonals
+            if idx > 0: 
+                a_lhs[idx], a_rhs[idx] = -alpha, alpha
+            if idx < M - 2: 
+                c_lhs[idx], c_rhs[idx] = -gamma, gamma
+            b_lhs[idx], b_rhs[idx] = 1 + beta, 1 - beta
+            
+            # Construct RHS vector using values from step n+1
+            rhs[idx] = a_rhs[idx] * V[n+1, i-1] + b_rhs[idx] * V[n+1, i] + c_rhs[idx] * V[n+1, i+1]
+        
+        # Adjust RHS for boundaries at step n and n+1
+        alpha_first = 0.25 * dt * ((sigma * S[1])**2 / dS**2 - (rd - rf) * S[1] / dS)
+        gamma_last  = 0.25 * dt * ((sigma * S[M-1])**2 / dS**2 + (rd - rf) * S[M-1] / dS)
+        
+        rhs[0] += alpha_first * (V[n, 0] + V[n+1, 0])
+        rhs[-1] += gamma_last * (V[n, M] + V[n+1, M])
+        
+        # Solve tridiagonal system for the interior
+        V[n, 1:M] = thomas1(a_lhs[1:], b_lhs, c_lhs[:-1], rhs)
+        
+    return V
 
-ax2.bar(x_pos - width/2, eoa_cn, width, label='Crank-Nicolson', 
-        color='#2ecc71', alpha=0.7, edgecolor='black', linewidth=2)
-ax2.bar(x_pos + width/2, eoa_btcs, width, label='BTCS', 
-        color='#e74c3c', alpha=0.7, edgecolor='black', linewidth=2)
-ax2.axhline(2, color='#2ecc71', linestyle='--', linewidth=2, alpha=0.5, label='Theoretical (CN): 2')
-ax2.axhline(1, color='#e74c3c', linestyle='--', linewidth=2, alpha=0.5, label='Theoretical (BTCS): 1')
-ax2.set_xlabel('Refinement Level', fontsize=12, fontweight='bold')
-ax2.set_ylabel('Empirical Order of Accuracy', fontsize=12, fontweight='bold')
-ax2.set_title('Measured Convergence Orders', fontsize=14, fontweight='bold')
-ax2.set_xticks(x_pos)
-ax2.set_xticklabels([f'{N_values[i]}→{N_values[i+1]}' for i in range(len(eoa_cn))])
-ax2.legend(fontsize=10)
-ax2.grid(True, alpha=0.3, axis='y')
-ax2.set_ylim([0, 2.5])
+def convergence_study(method, M_values, N_values):
+    results = []
+    for M, N in zip(M_values, N_values):
+        S_conv = np.linspace(0.01, 400, M+1)
+        
+        if method == 'ftcs':
+            dS_conv = S_conv[1] - S_conv[0]
+            dt_max = 0.45 * dS_conv**2 / (sigma**2 * S_conv[-1]**2)
+            N_safe = max(N, int(T/dt_max) + 1)
+            V = ftcs(S_conv, K, rd, rf, sigma, T, M, N_safe)
+            N_used = N_safe
+        elif method == 'btcs':
+            V = btcs(S_conv, K, rd, rf, sigma, T, M, N)
+            N_used = N
+        else:
+            V = crank_nicolson(S_conv, K, rd, rf, sigma, T, M, N)
+            N_used = N
+        
+        V_exact = np.array([gk_call(s, K, rd, rf, sigma, T) for s in S_conv])
+        error = np.max(np.abs(V[0,:] - V_exact))
+        
+        results.append({'M': M, 'N': N_used, 'dS': (400-0.01)/M, 'dt': T/N_used, 'Error': error})
+    
+    return pd.DataFrame(results)
 
-plt.tight_layout()
-plt.show()
+M_levels = [20, 40, 80, 160]
+N_levels = [20, 40, 80, 160]
+
+print("Convergence Studies:")
+conv_results = {}
+for method in ['ftcs', 'btcs', 'cn']:
+    print(f"\n{method.upper()}:")
+    df = convergence_study(method, M_levels, N_levels)
+    print(df.to_string(index=False))
+    conv_results[method] = df
+
+
+
+# 4. Parameters and Execution
+S0, K, T, sigma = 100, 100, 1.0, 0.2
+rd, rf = 0.05, 0.03
+S_min, S_max, M, N = 0, 200, 100, 100
+
+# Explicitly create S as an array to fix the Scalar Error
+S = np.linspace(S_min, S_max, M + 1)
+i_test = np.argmin(np.abs(S - S0))
+
+V_exact = gk_call(S0, K, rd, rf, sigma, T)
+V_cn = crank_nicolson(S, K, rd, rf, sigma, T, M, N)
+
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+# Spatial convergence
+for method, color in [('ftcs','blue'), ('btcs','green'), ('cn','red')]:
+    df = conv_results[method]
+    ax1.loglog(df['dS'], df['Error'], 'o-', color=color, linewidth=2, markersize=8, label=method.upper(), alpha=0.7)
+
+dS_ref = conv_results['cn']['dS'].values
+ref2 = conv_results['cn']['Error'].iloc[0] * (dS_ref / dS_ref[0])**2
+ax1.loglog(dS_ref, ref2, 'k--', linewidth=1.5, alpha=0.5, label='O(ΔS²)')
+ax1.set_xlabel('Spatial Step ΔS'); ax1.set_ylabel('L∞ Error')
+ax1.set_title('Spatial Convergence'); ax1.legend(); ax1.grid(True, alpha=0.3, which='both')
+
+# Temporal convergence  
+for method, color in [('ftcs','blue'), ('btcs','green'), ('cn','red')]:
+    df = conv_results[method]
+    ax2.loglog(df['dt'], df['Error'], 'o-', color=color, linewidth=2, markersize=8, label=method.upper(), alpha=0.7)
+
+dt_ref = conv_results['cn']['dt'].values
+ref1 = conv_results['btcs']['Error'].iloc[0] * (dt_ref / dt_ref[0])**1
+ref2_t = conv_results['cn']['Error'].iloc[0] * (dt_ref / dt_ref[0])**2
+ax2.loglog(dt_ref, ref1, 'k--', linewidth=1.5, alpha=0.5, label='O(Δt)')
+ax2.loglog(dt_ref, ref2_t, 'r:', linewidth=1.5, alpha=0.5, label='O(Δt²)')
+ax2.set_xlabel('Time Step Δt'); ax2.set_ylabel('L∞ Error')
+ax2.set_title('Temporal Convergence'); ax2.legend(); ax2.grid(True, alpha=0.3, which='both')
+
+plt.tight_layout(); plt.show()
 ```
+
+
 
 ::: {.callout-note}
 ## Key Finding
@@ -927,50 +1058,6 @@ CN achieves **second-order convergence** (slope = 2), confirming $O(\Delta t^2)$
 
 ## Accuracy vs Computational Cost {.scrollable}
 
-```{python}
-#| echo: false
-#| fig-width: 12
-#| fig-height: 6
-
-# Efficiency analysis
-comp_costs = N_values * M_fixed  # Approximate operations
-efficiency_cn = errors_cn / (comp_costs / comp_costs[0])
-efficiency_btcs = errors_btcs / (comp_costs / comp_costs[0])
-
-fig, ax = plt.subplots(figsize=(12, 6), facecolor='#f8f9fa')
-ax.set_facecolor('#f8f9fa')
-
-ax.loglog(comp_costs, errors_cn, 'o-', color='#2ecc71', linewidth=3, markersize=12, 
-          label='Crank-Nicolson', alpha=0.8)
-ax.loglog(comp_costs, errors_btcs, 's-', color='#e74c3c', linewidth=3, markersize=12, 
-          label='BTCS', alpha=0.8)
-
-# Add annotations
-for i, (cost, err) in enumerate(zip(comp_costs, errors_cn)):
-    if i % 2 == 0:
-        ax.annotate(f'N={N_values[i]}', xy=(cost, err), xytext=(10, 10), 
-                   textcoords='offset points', fontsize=9, 
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor='#2ecc71'))
-
-ax.set_xlabel('Computational Cost (Operations)', fontsize=12, fontweight='bold')
-ax.set_ylabel('L∞ Error', fontsize=12, fontweight='bold')
-ax.set_title('Accuracy vs Computational Efficiency', fontsize=14, fontweight='bold')
-ax.legend(fontsize=11, loc='upper right')
-ax.grid(True, alpha=0.3, which='both')
-
-plt.tight_layout()
-plt.show()
-
-# Print efficiency table
-efficiency_df = pd.DataFrame({
-    'Method': ['CN', 'CN', 'CN', 'BTCS', 'BTCS', 'BTCS'],
-    'N': list(N_values[:3]) + list(N_values[:3]),
-    'Error': list(errors_cn[:3]) + list(errors_btcs[:3]),
-    'Cost': list(comp_costs[:3]) + list(comp_costs[:3])
-})
-print("\nEfficiency Comparison:")
-print(efficiency_df.to_string(index=False))
-```
 
 ::: {.callout-tip}
 ## Winner: Crank-Nicolson
@@ -1107,57 +1194,166 @@ Time value is maximized near ATM (S ≈ K) and diminishes as maturity approaches
 ## Numerical vs Analytical Comparison {.scrollable}
 
 ```{python}
-#| echo: false
-#| fig-width: 14
-#| fig-height: 6
 
-# High-resolution numerical solution
-S_fine, V_fine = crank_nicolson(50, 150, 200, 1.0, 500, K, rd, rf, sigma)
-V_analytical_fine = np.array([gk_call(s, K, rd, rf, sigma, 1.0) for s in S_fine])
-errors = np.abs(V_fine - V_analytical_fine)
-rel_errors = errors / V_analytical_fine * 100
+import numpy as np
+import time
+from scipy.stats import norm
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6), facecolor='#f8f9fa')
-for ax in [ax1, ax2]:
-    ax.set_facecolor('#f8f9fa')
+# 1. Analytical Solution (Garman-Kohlhagen)
+def gk_call(S, K, rd, rf, sigma, tau):
+    if tau <= 0: return np.maximum(S - K, 0)
+    d1 = (np.log(S/K) + (rd - rf + 0.5*sigma**2)*tau) / (sigma*np.sqrt(tau))
+    d2 = d1 - sigma*np.sqrt(tau)
+    return S*np.exp(-rf*tau)*norm.cdf(d1) - K*np.exp(-rd*tau)*norm.cdf(d2)
 
-# Price comparison
-ax1.plot(S_fine, V_analytical_fine, 'k-', linewidth=3, label='Analytical (Exact)', alpha=0.8)
-ax1.plot(S_fine, V_fine, 'r--', linewidth=2, label='Crank-Nicolson (M=200, N=500)', alpha=0.7)
-ax1.scatter(S_fine[::10], V_fine[::10], color='red', s=50, alpha=0.6, zorder=5)
-ax1.axvline(K, color='gray', linestyle=':', linewidth=2, alpha=0.4)
-ax1.set_xlabel('Spot Price S', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Call Option Price', fontsize=12, fontweight='bold')
-ax1.set_title('Numerical vs Analytical Solution', fontsize=14, fontweight='bold')
-ax1.legend(fontsize=11)
-ax1.grid(True, alpha=0.3)
 
-# Error analysis
-ax2_twin = ax2.twinx()
-ax2.plot(S_fine, errors, 'b-', linewidth=2.5, label='Absolute Error', alpha=0.8)
-ax2_twin.plot(S_fine, rel_errors, 'r-', linewidth=2.5, label='Relative Error (%)', alpha=0.8)
-ax2.axvline(K, color='gray', linestyle=':', linewidth=2, alpha=0.4)
-ax2.fill_between(S_fine, 0, errors, alpha=0.2, color='blue')
-ax2.set_xlabel('Spot Price S', fontsize=12, fontweight='bold')
-ax2.set_ylabel('Absolute Error', fontsize=12, fontweight='bold', color='blue')
-ax2_twin.set_ylabel('Relative Error (%)', fontsize=12, fontweight='bold', color='red')
-ax2.set_title('Numerical Error Analysis', fontsize=14, fontweight='bold')
-ax2.tick_params(axis='y', labelcolor='blue')
-ax2_twin.tick_params(axis='y', labelcolor='red')
-ax2.grid(True, alpha=0.3)
+def thomas1(a, b, c, d):
+    """Tridiagonal solver"""
+    n = len(b)
+    c_star, d_star, x = np.zeros(n-1), np.zeros(n), np.zeros(n)
+    c_star[0], d_star[0] = c[0]/b[0], d[0]/b[0]
+    for i in range(1, n-1):
+        denom = b[i] - a[i-1]*c_star[i-1]
+        c_star[i] = c[i] / denom
+        d_star[i] = (d[i] - a[i-1]*d_star[i-1]) / denom
+    d_star[n-1] = (d[n-1] - a[n-2]*d_star[n-2]) / (b[n-1] - a[n-2]*c_star[n-2])
+    x[n-1] = d_star[n-1]
+    for i in range(n-2, -1, -1):
+        x[i] = d_star[i] - c_star[i]*x[i+1]
+    return x
 
-lines1, labels1 = ax2.get_legend_handles_labels()
-lines2, labels2 = ax2_twin.get_legend_handles_labels()
-ax2.legend(lines1 + lines2, labels1 + labels2, fontsize=10, loc='upper left')
+def ftcs(S, K, rd, rf, sigma, T, M, N):
+    """FTCS scheme"""
+    dS, dt = S[1]-S[0], T/N
+    V = np.zeros((N+1, M+1))
+    V[N,:] = np.maximum(S - K, 0)  # Terminal condition
+    V[:,0] = 0; V[:,M] = S[M] - K*np.exp(-rd*(T-np.linspace(0,T,N+1)))  # Boundaries
+    
+    for n in range(N-1, -1, -1):
+        for i in range(1, M):
+            alpha = 0.5*dt*((sigma*S[i])**2/dS**2 - (rd-rf)*S[i]/dS)
+            beta = -dt*((sigma*S[i])**2/dS**2 + rd)
+            gamma = 0.5*dt*((sigma*S[i])**2/dS**2 + (rd-rf)*S[i]/dS)
+            V[n,i] = alpha*V[n+1,i-1] + (1+beta)*V[n+1,i] + gamma*V[n+1,i+1]
+    return V
 
-plt.tight_layout()
-plt.show()
+def btcs(S, K, rd, rf, sigma, T, M, N):
+    """BTCS scheme"""
+    dS, dt = S[1]-S[0], T/N
+    V = np.zeros((N+1, M+1))
+    V[N,:] = np.maximum(S - K, 0)
+    V[:,0] = 0; V[:,M] = S[M] - K*np.exp(-rd*(T-np.linspace(0,T,N+1)))
+    
+    for n in range(N-1, -1, -1):
+        a, b, c, d = np.zeros(M-1), np.zeros(M-1), np.zeros(M-1), np.zeros(M-1)
+        for i in range(1, M):
+            idx = i-1
+            alpha = -0.5*dt*((sigma*S[i])**2/dS**2 - (rd-rf)*S[i]/dS)
+            beta = 1 + dt*((sigma*S[i])**2/dS**2 + rd)
+            gamma = -0.5*dt*((sigma*S[i])**2/dS**2 + (rd-rf)*S[i]/dS)
+            if idx > 0: a[idx] = alpha
+            if idx < M-2: c[idx] = gamma
+            b[idx] = beta
+            d[idx] = V[n+1,i]
+            if i == 1: d[idx] -= alpha*V[n,0]
+            if i == M-1: d[idx] -= gamma*V[n,M]
+        V[n,1:M] = thomas1(a[1:], b, c[:-1], d)
+    return V
 
-print(f"\nError Statistics:")
-print(f"Maximum Absolute Error: {np.max(errors):.6f}")
-print(f"Mean Absolute Error: {np.mean(errors):.6f}")
-print(f"Maximum Relative Error: {np.max(rel_errors[V_analytical_fine > 0.1]):.4f}%")
-print(f"Mean Relative Error: {np.mean(rel_errors[V_analytical_fine > 0.1]):.4f}%")
+# 3. Corrected Crank-Nicolson Function
+def crank_nicolson(S, K, rd, rf, sigma, T, M, N):
+    """Crank-Nicolson scheme for Garman-Kohlhagen PDE"""
+    # Ensure S is an array to avoid IndexError
+    dS = S[1] - S[0]
+    dt = T / N
+    V = np.zeros((N + 1, M + 1))
+    
+    # Initial Condition at Expiry (T)
+    V[N, :] = np.maximum(S - K, 0)
+    
+    # Boundary Conditions for all time steps
+    tau_grid = T - np.linspace(0, T, N + 1)
+    V[:, 0] = 0 # S -> 0
+    # Corrected Boundary for FX: include exp(-rf * tau)
+    V[:, M] = S[M] * np.exp(-rf * tau_grid) - K * np.exp(-rd * tau_grid)
+
+    for n in range(N - 1, -1, -1):
+        a_lhs, b_lhs, c_lhs = np.zeros(M - 1), np.zeros(M - 1), np.zeros(M - 1)
+        a_rhs, b_rhs, c_rhs = np.zeros(M - 1), np.zeros(M - 1), np.zeros(M - 1)
+        rhs = np.zeros(M - 1)
+        
+        for i in range(1, M):
+            idx = i - 1
+            # Crank-Nicolson Coefficients
+            alpha = 0.25 * dt * ((sigma * S[i])**2 / dS**2 - (rd - rf) * S[i] / dS)
+            beta  = 0.5  * dt * ((sigma * S[i])**2 / dS**2 + rd)
+            gamma = 0.25 * dt * ((sigma * S[i])**2 / dS**2 + (rd - rf) * S[i] / dS)
+            
+            # Populate LHS and RHS diagonals
+            if idx > 0: 
+                a_lhs[idx], a_rhs[idx] = -alpha, alpha
+            if idx < M - 2: 
+                c_lhs[idx], c_rhs[idx] = -gamma, gamma
+            b_lhs[idx], b_rhs[idx] = 1 + beta, 1 - beta
+            
+            # Construct RHS vector using values from step n+1
+            rhs[idx] = a_rhs[idx] * V[n+1, i-1] + b_rhs[idx] * V[n+1, i] + c_rhs[idx] * V[n+1, i+1]
+        
+        # Adjust RHS for boundaries at step n and n+1
+        alpha_first = 0.25 * dt * ((sigma * S[1])**2 / dS**2 - (rd - rf) * S[1] / dS)
+        gamma_last  = 0.25 * dt * ((sigma * S[M-1])**2 / dS**2 + (rd - rf) * S[M-1] / dS)
+        
+        rhs[0] += alpha_first * (V[n, 0] + V[n+1, 0])
+        rhs[-1] += gamma_last * (V[n, M] + V[n+1, M])
+        
+        # Solve tridiagonal system for the interior
+        V[n, 1:M] = thomas1(a_lhs[1:], b_lhs, c_lhs[:-1], rhs)
+        
+    return V
+
+# 4. Parameters and Execution
+S0, K, T, sigma = 100, 100, 1.0, 0.2
+rd, rf = 0.05, 0.03
+S_min, S_max, M, N = 0, 200, 100, 100
+
+# Explicitly create S as an array to fix the Scalar Error
+S = np.linspace(S_min, S_max, M + 1)
+i_test = np.argmin(np.abs(S - S0))
+
+V_exact = gk_call(S0, K, rd, rf, sigma, T)
+V_cn = crank_nicolson(S, K, rd, rf, sigma, T, M, N)
+
+print(f"Price at S={S0}: CN={V_cn[0, i_test]:.6f}, Exact={V_exact:.6f}")
+print(f"Relative Error: {abs(V_cn[0, i_test] - V_exact)/V_exact*100:.4f}%")
+
+
+
+
+# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6), facecolor='#f8f9fa')
+# for ax in [ax1, ax2]:
+#     ax.set_facecolor('#f8f9fa')
+
+N = 100  # Even fewer!
+start = time.time()
+V_cn = crank_nicolson(S, K, rd, rf, sigma, T, M, N)
+print(f"CN: {time.time()-start:.3f}s (N={N})")
+print(f"Price at S={S0}: CN={V_cn[0,i_test]:.6f}, Exact={V_exact:.6f}, Error={abs(V_cn[0,i_test]-V_exact):.2e}")
+
+# Compare all
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+V_ftcs_comp = ftcs(S, K, rd, rf, sigma, T, M, 1000)
+V_btcs_comp = btcs(S, K, rd, rf, sigma, T, M, 200)
+methods = [('FTCS (N=1000)', V_ftcs_comp), ('BTCS (N=200)', V_btcs_comp), ('CN (N=100)', V_cn)]
+V_analytical = np.array([gk_call(s, K, rd, rf, sigma, T) for s in S])
+
+for ax, (name, V_method) in zip(axes, methods):
+    ax.plot(S, V_method[0,:], 'b-', linewidth=2, label=name)
+    ax.plot(S, V_analytical, 'r--', linewidth=2, label='Analytical', alpha=0.7)
+    ax.axvline(K, color='gray', linestyle=':', alpha=0.5)
+    ax.set_xlabel('Spot (S)'); ax.set_ylabel('Call Price')
+    ax.set_title(f'{name}'); ax.legend(); ax.grid(True, alpha=0.3)
+plt.tight_layout(); plt.show()
+
 ```
 
 ::: {.callout-tip}

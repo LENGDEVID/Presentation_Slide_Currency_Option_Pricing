@@ -272,7 +272,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li class="fragment"><strong>Corporate Finance</strong>: Manage international cash flows</li>
 </ul>
 <h3 id="historical-development">Historical Development</h3>
-<div id="6e89e8ce" class="cell" data-execution_count="1">
+<div id="5069896e" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -362,7 +362,7 @@ Group Members:<br>Leng Devid, Hem Bellyday, Phal Menghak, Lot Soklang<br><br>Pro
 <li><strong><span class="math inline">\(W_t\)</span></strong>: Standard Brownian motion</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="294d975f" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
+<div id="19c93ca5" class="cell" data-fig-height="4" data-fig-width="6" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -383,7 +383,7 @@ dV = \left( \frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\parti
 <h3 id="step-2-hedged-portfolio">Step 2: Hedged Portfolio</h3>
 <p>Construct portfolio: <span class="math inline">\(\Pi = V - \Delta S\)</span> where <span class="math inline">\(\Delta = \frac{\partial V}{\partial S}\)</span></p>
 <p><span class="math display">\[
-d\Pi = dV - \Delta dS - r_f \Delta S \, dt
+d\Pi = dV - \Delta dS
 \]</span></p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -443,7 +443,7 @@ d_2 = d_1 - \sigma\sqrt{\tau}
 </section>
 <section id="implementation-validation" class="slide level2 scrollable">
 <h2>Implementation &amp; Validation</h2>
-<div id="0ddbb599" class="cell" data-execution_count="3">
+<div id="15cd85da" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -479,7 +479,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="option-price-behavior" class="slide level2 scrollable">
 <h2>Option Price Behavior</h2>
-<div id="8127bd86" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
+<div id="9f6b3052" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -573,7 +573,7 @@ Put-Call Parity Check: True</code></pre>
 </tbody>
 </table>
 </div>
-<div id="864fa88d" class="cell" data-execution_count="5">
+<div id="c0a77460" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">def</span> greeks_call(S, K, rd, rf, sigma, tau):</span>
@@ -594,7 +594,7 @@ Put-Call Parity Check: True</code></pre>
 </section>
 <section id="greeks-visualization" class="slide level2 scrollable">
 <h2>Greeks Visualization</h2>
-<div id="02b2a82c" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
+<div id="b8097e78" class="cell" data-fig-height="10" data-fig-width="14" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -626,7 +626,7 @@ Put-Call Parity Check: True</code></pre>
 <section id="delta-hedging-application" class="slide level2 scrollable">
 <h2>Delta Hedging Application</h2>
 <h3 id="practical-risk-management">Practical Risk Management</h3>
-<div id="61e8fc32" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
+<div id="264675a3" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -692,7 +692,7 @@ Put-Call Parity Check: True</code></pre>
 <li><span class="math inline">\(V_M^n = S_M - K e^{-r_d(T-t_n)}\)</span> (S → ∞)</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div id="3e686d7d" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
+<div id="a444e521" class="cell" data-fig-height="5" data-fig-width="6" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -781,7 +781,7 @@ V_i^{n+1} = V_i^n + \Delta t \left[ (r_d - r_f)S_i \frac{V_{i+1}^{n+1} - V_{i-1}
 </section>
 <section id="implementation-example" class="slide level2 scrollable">
 <h2>Implementation Example</h2>
-<div id="43a38ed0" class="cell" data-execution_count="9">
+<div id="7c5a89d6" class="cell" data-execution_count="9">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">def</span> crank_nicolson(S_min, S_max, M, T, N, K, rd, rf, sigma, option_type<span class="op">=</span><span class="st">'call'</span>):</span>
@@ -910,7 +910,7 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="stability-demonstration" class="slide level2 scrollable">
 <h2>Stability Demonstration</h2>
-<div id="4184b7f3" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
+<div id="32338589" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1003,11 +1003,35 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="convergence-study-results" class="slide level2 scrollable">
 <h2>Convergence Study Results</h2>
-<div id="764d6d85" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="11">
+<div id="fdc2f004" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-stdout">
+<pre><code>Convergence Studies:
+
+FTCS:
+  M    N        dS       dt     Error
+ 20   36 19.999500 0.027778 11.821787
+ 40  143  9.999750 0.006993 11.821787
+ 80  569  4.999875 0.001757 11.821787
+160 2276  2.499938 0.000439 11.821787
+
+BTCS:
+  M   N        dS      dt     Error
+ 20  20 19.999500 0.05000 11.821787
+ 40  40  9.999750 0.02500 11.821787
+ 80  80  4.999875 0.01250 11.821787
+160 160  2.499938 0.00625 11.821787
+
+CN:
+  M   N        dS      dt    Error
+ 20  20 19.999500 0.05000 1.180862
+ 40  40  9.999750 0.02500 0.249385
+ 80  80  4.999875 0.01250 0.059586
+160 160  2.499938 0.00625 0.014733</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-12-output-1.png" width="1334" height="564"></p>
+<p><img data-src="presentation_files/figure-revealjs/cell-12-output-2.png" width="1333" height="564"></p>
 </figure>
 </div>
 </div>
@@ -1047,26 +1071,6 @@ Relative Error: 100.0000%</code></pre>
 </section>
 <section id="accuracy-vs-computational-cost" class="slide level2 scrollable">
 <h2>Accuracy vs Computational Cost</h2>
-<div id="436c1249" class="cell" data-fig-height="6" data-fig-width="12" data-execution_count="12">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-13-output-1.png" width="1135" height="564"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Efficiency Comparison:
-Method   N     Error  Cost
-    CN  50 39.537312 10000
-    CN 100 42.032855 20000
-    CN 200 44.005358 40000
-  BTCS  50 39.537312 10000
-  BTCS 100 19.768656 20000
-  BTCS 200  9.884328 40000</code></pre>
-</div>
-</div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1088,11 +1092,11 @@ Method   N     Error  Cost
 </section>
 <section id="d-option-price-surface" class="slide level2 scrollable">
 <h2>3D Option Price Surface</h2>
-<div id="ccc745fe" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="13">
+<div id="530ed7d0" class="cell" data-fig-height="7" data-fig-width="14" data-execution_count="12">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-14-output-1.png" width="1323" height="661"></p>
+<p><img data-src="presentation_files/figure-revealjs/cell-13-output-1.png" width="1323" height="661"></p>
 </figure>
 </div>
 </div>
@@ -1132,11 +1136,11 @@ Method   N     Error  Cost
 </section>
 <section id="time-evolution-of-option-prices" class="slide level2 scrollable">
 <h2>Time Evolution of Option Prices</h2>
-<div id="2c9c976f" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="14">
+<div id="b0427d36" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="13">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-15-output-1.png" width="1335" height="566"></p>
+<p><img data-src="presentation_files/figure-revealjs/cell-14-output-1.png" width="1335" height="566"></p>
 </figure>
 </div>
 </div>
@@ -1176,21 +1180,19 @@ Method   N     Error  Cost
 </section>
 <section id="numerical-vs-analytical-comparison" class="slide level2 scrollable">
 <h2>Numerical vs Analytical Comparison</h2>
-<div id="26b4b3c4" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="15">
+<div id="e5547c4c" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-stdout">
+<pre><code>Price at S=100: CN=8.643050, Exact=8.652529
+Relative Error: 0.1095%
+CN: 0.026s (N=100)
+Price at S=100: CN=8.643050, Exact=8.652529, Error=9.48e-03</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-16-output-1.png" width="1335" height="566"></p>
+<p><img data-src="presentation_files/figure-revealjs/cell-15-output-2.png" width="1718" height="470"></p>
 </figure>
 </div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Error Statistics:
-Maximum Absolute Error: 45.960826
-Mean Absolute Error: 14.423080
-Maximum Relative Error: 100.0000%
-Mean Relative Error: 98.5318%</code></pre>
 </div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -1234,11 +1236,11 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="method-comparison-summary" class="slide level2 scrollable">
 <h2>Method Comparison Summary</h2>
-<div id="c798a9cb" class="cell" data-execution_count="16">
+<div id="2307c897" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-17-output-1.png" width="1334" height="375"></p>
+<p><img data-src="presentation_files/figure-revealjs/cell-16-output-1.png" width="1334" height="375"></p>
 </figure>
 </div>
 </div>
@@ -1315,11 +1317,11 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="computational-performance" class="slide level2 scrollable">
 <h2>Computational Performance</h2>
-<div id="feb2bcbd" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="17">
+<div id="1ee995a1" class="cell" data-fig-height="6" data-fig-width="14" data-execution_count="16">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-18-output-1.png" width="1334" height="564"></p>
+<p><img data-src="presentation_files/figure-revealjs/cell-17-output-1.png" width="1334" height="564"></p>
 </figure>
 </div>
 </div>
@@ -1369,11 +1371,11 @@ Mean Relative Error: 98.5318%</code></pre>
 </section>
 <section id="key-findings" class="slide level2 scrollable">
 <h2>Key Findings</h2>
-<div id="3eb9ddec" class="cell" data-execution_count="18">
+<div id="5596ab50" class="cell" data-execution_count="17">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentation_files/figure-revealjs/cell-19-output-1.png" width="1334" height="471"></p>
+<p><img data-src="presentation_files/figure-revealjs/cell-18-output-1.png" width="1334" height="471"></p>
 </figure>
 </div>
 </div>
