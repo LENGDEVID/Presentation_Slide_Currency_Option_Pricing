@@ -680,10 +680,10 @@ def thomas_algorithm(a, b, c, d):
     return x
 
 # Demonstrate
-S_num, V_num = crank_nicolson(50, 150, 100, 1.0, 200, K, rd, rf, sigma)
-print(f"Numerical Call Price at S=100: ${np.interp(100, S_num, V_num):.4f}")
+# S_num, V_num = crank_nicolson(50, 150, 100, 1.0, 200, K, rd, rf, sigma)
+# print(f"Numerical Call Price at S=100: ${np.interp(100, S_num, V_num):.4f}")
 print(f"Analytical Call Price at S=100: ${gk_call(100, K, rd, rf, sigma, 1.0):.4f}")
-print(f"Relative Error: {abs(np.interp(100, S_num, V_num) - gk_call(100, K, rd, rf, sigma, 1.0))/gk_call(100, K, rd, rf, sigma, 1.0)*100:.4f}%")
+# print(f"Relative Error: {abs(np.interp(100, S_num, V_num) - gk_call(100, K, rd, rf, sigma, 1.0))/gk_call(100, K, rd, rf, sigma, 1.0)*100:.4f}%")
 ```
 
 # Part V: Stability Analysis
